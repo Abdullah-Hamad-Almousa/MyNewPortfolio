@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Abdullah Almousa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body class="dark-theme">
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">PORTFOLIO</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="capabilities.html">Capabilities</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="page-padding">
+        <section class="section">
+            <div class="container contact-container">
+                <div class="contact-info">
+                    <h1 class="page-title">Contact Me</h1>
+                    <div class="presence-indicator" id="presenceIndicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Checking availability...</span>
+                    </div>
+                    <p>Reach out for collaborations, project inquiries, or any ML-related discussions. I usually respond
+                        within 24 hours.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">📧 abdullahmlwork@gmail.com</div>
+                        <div class="contact-item">📍 Riyadh, Saudi Arabia</div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form id="contactForm" action="https://formspree.io/f/meorrjjr" method="POST" class="contact-form">
+                        <div class="form-group">
+                            <label>Inquiry Type</label>
+                            <select name="inquiryType" required>
+                                <option value="" disabled selected>Select inquiry type...</option>
+                                <option value="collaboration">Collaboration</option>
+                                <option value="job">Job Opportunity</option>
+                                <option value="technical">Technical Discussion</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" name="name" placeholder="Mohammad Ali" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" name="email" placeholder="Ali@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Organization</label>
+                                <div class="input-with-button">
+                                    <input type="text" name="organization" id="orgInput" placeholder="Company Name"
+                                        required>
+                                    <button type="button" id="btnNone" class="btn-inline">None</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Your Role</label>
+                                <input type="text" name="role" placeholder="e.g. Recruiter" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" name="subject" placeholder="What is this regarding?" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea name="message" placeholder="Type your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                    </form>
+                    <div id="formStatus" class="form-status"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="http://linkedin.com/in/abdullah-almousa-a76562237" target="_blank">LinkedIn</a>
+                <a href="http://github.com/Abdullah-Hamad-Almousa" target="_blank">GitHub</a>
+                <a href="http://kaggle.com/abdullahhamadalmousa" target="_blank">Kaggle</a>
+            </div>
+            <p>&copy; 2026 Abdullah Almousa</p>
+        </div>
+    </footer>
+    <script src="../assets/js/main.js"></script>
+</body>
+
+</html>

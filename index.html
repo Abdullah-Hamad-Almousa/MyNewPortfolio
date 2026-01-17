@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Abdullah Almousa</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body class="dark-theme">
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">PORTFOLIO</div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="pages/capabilities.html">Capabilities</a></li>
+                <li><a href="pages/contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h2 class="sub-heading">Machine Learning Engineer</h2>
+                <h1 id="typewriter-name" class="main-name"></h1>
+                <p class="hero-desc">Advancing EDA and Algorithms to solve complex business problems.</p>
+                <div class="hero-actions">
+                    <a href="pages/capabilities.html" class="btn btn-primary">See What I Can Do</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Work Through Section -->
+        <section id="work-through" class="section">
+            <div class="container">
+                <h2 class="section-title">Work Through</h2>
+                <div class="timeline">
+                    <div class="timeline-item" data-gsap="fade-up">
+                        <div class="time">2025 - Present</div>
+                        <h3>GandI Open World Game x Kinetic Hosting</h3>
+                        <p>Partnered to publish and distribute the GandI adventure game. Focus on smooth availability
+                            and player access.</p>
+                    </div>
+                    <div class="timeline-item" data-gsap="fade-up">
+                        <div class="time">2024</div>
+                        <h3>Android Malware Detection System</h3>
+                        <p>Developed ML-based detection system with over 99% accuracy using novel feature extraction.
+                        </p>
+                    </div>
+                    <div class="timeline-item" data-gsap="fade-up">
+                        <div class="time">2024</div>
+                        <h3>IT Support Specialist (Internship)</h3>
+                        <p>Diagnosed and resolved hardware/software incidents, improving system stability for Artar.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements" class="section">
+            <div class="container">
+                <h2 class="section-title">Achievements</h2>
+                <div class="achievements-grid">
+                    <div class="achievement-card" data-gsap="fade-up">
+                        <div class="achievement-icon">🏆</div>
+                        <div class="achievement-info">
+                            <h3>5th Place Nationwide</h3>
+                            <p>Saudi Arabia National Java Programming Contest (Al-Khwarizmi). Solved advanced
+                                algorithmic challenges under time constraints.</p>
+                        </div>
+                    </div>
+                    <div class="achievement-card" data-gsap="fade-up">
+                        <div class="achievement-icon">🎖️</div>
+                        <div class="achievement-info">
+                            <h3>Software Engineering Club Award</h3>
+                            <p>Recognized for contribution and excellence in software development practices (2022).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Work - Enhanced -->
+        <section id="projects" class="section bg-alt">
+            <div class="container">
+                <h2 class="section-title">Featured Work</h2>
+                <div class="projects-grid">
+                    <div class="project-detailed" data-gsap="fade-right">
+                        <div class="project-image-placeholder">Malware Analysis</div>
+                        <div class="project-body">
+                            <h3>Malware Detection ML</h3>
+                            <p>Implemented using TensorFlow and Python. Achieved 99.1% accuracy on large-scale datasets
+                                using static analysis features.</p>
+                            <div class="tags"><span>TensorFlow</span><span>Scikit-Learn</span><span>Python</span></div>
+                        </div>
+                    </div>
+                    <div class="project-detailed" data-gsap="fade-up">
+                        <div class="project-image-placeholder">Game Development</div>
+                        <div class="project-body">
+                            <h3>GandI Adventure Game</h3>
+                            <p>Engineered using Java, Kotlin, and Android Studio. Featured complex JSON game state
+                                management and hosting integration.</p>
+                            <div class="tags"><span>Java</span><span>Kotlin</span><span>JSON</span></div>
+                        </div>
+                    </div>
+                    <div class="project-detailed" data-gsap="fade-up">
+                        <div class="project-image-placeholder">Algorithmic Analysis</div>
+                        <div class="project-body">
+                            <h3>Advanced EDA & Algorithms</h3>
+                            <p>Deep statistical analysis on high-dimensional datasets. Optimized feature selection
+                                processes using custom mathematical algorithms.</p>
+                            <div class="tags"><span>Python</span><span>Numpy</span><span>Statistics</span></div>
+                        </div>
+                    </div>
+                    <div class="project-detailed" data-gsap="fade-left">
+                        <div class="project-image-placeholder">Data Analytics</div>
+                        <div class="project-body">
+                            <h3>Business Intelligence with Power BI</h3>
+                            <p>Created interactive dashboards to visualize ML pipeline performance and system downtime
+                                metrics.</p>
+                            <div class="tags"><span>Power BI</span><span>Data Visualization</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Radar Chart Preview -->
+        <section id="skills-preview" class="section">
+            <div class="container">
+                <div class="skills-wrapper">
+                    <div class="skills-content" data-gsap="fade-right">
+                        <h2>Analytical Mastery</h2>
+                        <p>My core focus is on EDA and Algorithms. I leverage mathematical optimization to drive
+                            data-informed decisions.</p>
+                    </div>
+                    <div class="skills-chart-container" data-gsap="fade-left">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="http://linkedin.com/in/abdullah-almousa-a76562237" target="_blank">LinkedIn</a>
+                <a href="http://github.com/Abdullah-Hamad-Almousa" target="_blank">GitHub</a>
+                <a href="http://kaggle.com/abdullahhamadalmousa" target="_blank">Kaggle</a>
+            </div>
+            <p>&copy; 2026 Abdullah Almousa</p>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

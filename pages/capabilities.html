@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capabilities | Abdullah Almousa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+
+<body class="dark-theme">
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">PORTFOLIO</div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="capabilities.html" class="active">Capabilities</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="page-padding">
+        <section class="section">
+            <div class="container">
+                <h1 class="page-title">What I Can Do</h1>
+                <div class="services-grid large-grid">
+                    <div class="service-card-full">
+                        <h3>Exploratory Data Analysis (EDA)</h3>
+                        <p>I perform deep dives into datasets to extract actionable insights. My work involves cleaning,
+                            normalizing, and visualizing data to expose trends that drive strategy.</p>
+                    </div>
+                    <div class="service-card-full">
+                        <h3>Advanced Algorithmic Design</h3>
+                        <p>Specializing in predictive modeling and classification. I develop custom mathematical
+                            solutions tailored to high-precision requirements.</p>
+                    </div>
+                    <div class="service-card-full">
+                        <h3>Deep Learning & CV</h3>
+                        <p>Proficient in TensorFlow and PyTorch for building advanced Computer Vision models, including
+                            feature extraction and object detection.</p>
+                    </div>
+                </div>
+                <!-- Project Showcase Section -->
+                <section class="section">
+                    <div class="container">
+                        <h2 class="section-title">Project Showcase</h2>
+                        <ul class="tree-view">
+                            <li><span style="color: var(--primary); font-weight: 600;">Computer Vision</span>
+                                <ul>
+                                    <li><strong>DeepLearningMnist</strong>: CNN for handwritten digit recognition (>98%
+                                        accuracy)</li>
+                                    <li><strong>TensorflowImgClassification</strong>: End-to-end image classification
+                                        pipeline</li>
+                                </ul>
+                            </li>
+                            <li><span style="color: var(--primary); font-weight: 600;">Predictive Modeling</span>
+                                <ul>
+                                    <li><strong>DeepLearningWine</strong>: Quality assessment neural network using
+                                        physicochemical data</li>
+                                    <li><strong>LoadApproval</strong>: Automated loan eligibility prediction system</li>
+                                </ul>
+                            </li>
+                            <li><span style="color: var(--primary); font-weight: 600;">Deep Learning Experiments</span>
+                                <ul>
+                                    <li><strong>TestTwoTensorFlow</strong>: Custom training loops and visualization
+                                        experiments</li>
+                                    <li><strong>TenserflowEp0</strong>: Foundational TensorFlow implementation patterns
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <h3 class="section-subtitle" style="margin-top: 40px; margin-bottom: 20px;">Code Sample: CNN
+                            Architecture</h3>
+                        <pre class="code-box"><code>import tensorflow as tf
+from tensorflow.keras import layers, models
+
+def create_cnn_model(input_shape=(28, 28, 1), num_classes=10):
+    """
+    Builds a Convolutional Neural Network for image classification.
+    """
+    model = models.Sequential([
+        # Feature Extraction
+        layers.Conv2D(32, (3, 3), activation='relu', input_shape=input_shape),
+        layers.MaxPooling2D((2, 2)),
+        layers.Conv2D(64, (3, 3), activation='relu'),
+        layers.MaxPooling2D((2, 2)),
+        
+        # Classification
+        layers.Flatten(),
+        layers.Dense(64, activation='relu'),
+        layers.Dropout(0.5), # Prevent overfitting
+        layers.Dense(num_classes, activation='softmax')
+    ])
+    
+    model.compile(optimizer='adam',
+                  loss='sparse_categorical_crossentropy',
+                  metrics=['accuracy'])
+    return model</code></pre>
+                    </div>
+                </section>
+
+
+
+
+                <!-- Prototype Section -->
+                <div class="prototype-section section">
+                    <h2 class="section-title">ML Prototype Showcase</h2>
+                    <div class="prototype-container">
+                        <div class="prototype-mockup">
+                            <div class="prototype-header">ML Pipeline Visualizer v1.0</div>
+                            <div class="prototype-visual">
+                                <!-- A visual representation of a neural network or pipeline -->
+                                <div class="nodes-visual"></div>
+                            </div>
+                            <div class="prototype-controls">
+                                <button class="btn btn-secondary">Run Inference</button>
+                                <button class="btn btn-secondary">Analyze Features</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="http://linkedin.com/in/abdullah-almousa-a76562237" target="_blank">LinkedIn</a>
+                <a href="http://github.com/Abdullah-Hamad-Almousa" target="_blank">GitHub</a>
+                <a href="http://kaggle.com/abdullahhamadalmousa" target="_blank">Kaggle</a>
+            </div>
+            <p>&copy; 2026 Abdullah Almousa</p>
+        </div>
+    </footer>
+    <script src="../assets/js/main.js"></script>
+</body>
+
+</html>
