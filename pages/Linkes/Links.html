@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Links | Abdullah Almousa</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .link-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .link-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
+        }
+
+        .qr-container {
+            width: 180px;
+            height: 180px;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .qr-container:hover {
+            transform: scale(1.05);
+        }
+
+        .qr-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .link-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .link-actions {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .btn-copy {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-copy:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-visit {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-visit:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="dark-theme">
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">PORTFOLIO</div>
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../capabilities.html">Capabilities</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+                <li><a href="Links.html" class="active">Links</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero page-padding">
+            <div class="hero-bg" style="background-image: url('../../assets/images/hero-ml-workspace.png');"></div>
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <h2 class="sub-heading">Connect With Me</h2>
+                <h1 id="typewriter-links" class="main-name"></h1>
+                <p class="hero-desc">Explore my professional profiles, portfolio, and social accounts.</p>
+            </div>
+        </section>
+
+        <section id="links" class="section">
+            <div class="container">
+                <div class="links-grid">
+                    <!-- CV Link -->
+                    <div class="link-card" data-gsap="fade-up">
+                        <div class="qr-container"
+                            onclick="window.open('https://abdullah-hamad-almousa.github.io/MyNewPortfolio/pages/almousa_CV3.html', '_blank')">
+                            <img src="QRCodes/MyCV.png" alt="My CV QR Code">
+                        </div>
+                        <div class="link-info">
+                            <h3>My CV</h3>
+                            <p class="hero-desc" style="font-size: 0.9rem; margin-bottom: 0;">Updated resume with full
+                                project details.</p>
+                        </div>
+                        <div class="link-actions">
+                            <button class="btn-copy"
+                                onclick="copyToClipboard('https://abdullah-hamad-almousa.github.io/MyNewPortfolio/pages/almousa_CV3.html')">Copy
+                                Link</button>
+                            <a href="https://abdullah-hamad-almousa.github.io/MyNewPortfolio/pages/almousa_CV3.html"
+                                target="_blank" class="btn-visit">Visit</a>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Link -->
+                    <div class="link-card" data-gsap="fade-up">
+                        <div class="qr-container"
+                            onclick="window.open('https://abdullah-hamad-almousa.github.io/MyNewPortfolio', '_blank')">
+                            <img src="QRCodes/MyPortfolio.png" alt="My Portfolio QR Code">
+                        </div>
+                        <div class="link-info">
+                            <h3>My Portfolio</h3>
+                            <p class="hero-desc" style="font-size: 0.9rem; margin-bottom: 0;">My personal website and
+                                showcase.</p>
+                        </div>
+                        <div class="link-actions">
+                            <button class="btn-copy"
+                                onclick="copyToClipboard('https://abdullah-hamad-almousa.github.io/MyNewPortfolio')">Copy
+                                Link</button>
+                            <a href="https://abdullah-hamad-almousa.github.io/MyNewPortfolio" target="_blank"
+                                class="btn-visit">Visit</a>
+                        </div>
+                    </div>
+
+                    <!-- LinkedIn Link -->
+                    <div class="link-card" data-gsap="fade-up">
+                        <div class="qr-container"
+                            onclick="window.open('https://www.linkedin.com/in/abdullah-almousa-a76562237', '_blank')">
+                            <img src="QRCodes/MyLinkedIn.png" alt="LinkedIn QR Code">
+                        </div>
+                        <div class="link-info">
+                            <h3>LinkedIn</h3>
+                            <p class="hero-desc" style="font-size: 0.9rem; margin-bottom: 0;">Professional networking
+                                and experience.</p>
+                        </div>
+                        <div class="link-actions">
+                            <button class="btn-copy"
+                                onclick="copyToClipboard('https://www.linkedin.com/in/abdullah-almousa-a76562237')">Copy
+                                Link</button>
+                            <a href="https://www.linkedin.com/in/abdullah-almousa-a76562237" target="_blank"
+                                class="btn-visit">Visit</a>
+                        </div>
+                    </div>
+
+                    <!-- GitHub Link -->
+                    <div class="link-card" data-gsap="fade-up">
+                        <div class="qr-container"
+                            onclick="window.open('https://github.com/Abdullah-Hamad-Almousa', '_blank')">
+                            <img src="QRCodes/MyGithub.png" alt="GitHub QR Code">
+                        </div>
+                        <div class="link-info">
+                            <h3>GitHub</h3>
+                            <p class="hero-desc" style="font-size: 0.9rem; margin-bottom: 0;">Code repositories and open
+                                source work.</p>
+                        </div>
+                        <div class="link-actions">
+                            <button class="btn-copy"
+                                onclick="copyToClipboard('https://github.com/Abdullah-Hamad-Almousa')">Copy
+                                Link</button>
+                            <a href="https://github.com/Abdullah-Hamad-Almousa" target="_blank"
+                                class="btn-visit">Visit</a>
+                        </div>
+                    </div>
+
+                    <!-- Kaggle Link -->
+                    <div class="link-card" data-gsap="fade-up">
+                        <div class="qr-container"
+                            onclick="window.open('https://www.kaggle.com/abdullahhamadalmousa', '_blank')">
+                            <img src="QRCodes/MyKaggle.png" alt="Kaggle QR Code">
+                        </div>
+                        <div class="link-info">
+                            <h3>Kaggle</h3>
+                            <p class="hero-desc" style="font-size: 0.9rem; margin-bottom: 0;">Data science competitions
+                                and notebooks.</p>
+                        </div>
+                        <div class="link-actions">
+                            <button class="btn-copy"
+                                onclick="copyToClipboard('https://www.kaggle.com/abdullahhamadalmousa')">Copy
+                                Link</button>
+                            <a href="https://www.kaggle.com/abdullahhamadalmousa" target="_blank"
+                                class="btn-visit">Visit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="toast" class="toast">Link copied to clipboard!</div>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="http://linkedin.com/in/abdullah-almousa-a76562237" target="_blank">LinkedIn</a>
+                <a href="http://github.com/Abdullah-Hamad-Almousa" target="_blank">GitHub</a>
+                <a href="http://kaggle.com/abdullahhamadalmousa" target="_blank">Kaggle</a>
+            </div>
+            <p>&copy; 2026 Abdullah Almousa</p>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+    <script>
+        // Specific typewriter for this page
+        document.addEventListener('DOMContentLoaded', () => {
+            const typewriterEl = document.getElementById('typewriter-links');
+            if (typewriterEl && typeof initTypewriter === 'undefined') {
+                // Fallback for initTypewriter if not available globally
+                let text = "My Digital Links";
+                let i = 0;
+                function type() {
+                    if (i < text.length) {
+                        typewriterEl.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(type, 150);
+                    }
+                }
+                type();
+            } else if (typewriterEl) {
+                // Should be available from main.js, but main.js might need a bit of adjustment
+                // to make initTypewriter global or we just re-implement it briefly.
+            }
+        });
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('Could not copy text: ', err);
+            });
+        }
+    </script>
+</body>
+
+</html>
