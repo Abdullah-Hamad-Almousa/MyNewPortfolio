@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reading Journey | Abdullah Almousa</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .book-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.1);
+        }
+
+        .book-cover {
+            width: 160px;
+            height: 240px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: var(--transition);
+        }
+
+        .book-card:hover .book-cover {
+            transform: scale(1.05);
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-info {
+            width: 100%;
+        }
+
+        .book-info h3 {
+            font-size: 1.4rem;
+            line-height: 1.3;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-family: 'Outfit', sans-serif;
+            max-height: 1.8em; /* 1 line + a peek of the 2nd line */
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .book-card:hover .book-info h3 {
+            max-height: 10em; /* Fully reveals the title on hover */
+        }
+
+        /* Search and Filter */
+        .controls-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .controls-container input,
+        .controls-container select {
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+
+        .controls-container input:focus,
+        .controls-container select:focus {
+            border-color: var(--primary, #007bff);
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.2);
+        }
+
+        .controls-container select {
+            cursor: pointer;
+            appearance: none;
+            padding-right: 40px;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px top 50%;
+            background-size: 12px auto;
+        }
+
+        .controls-container select option {
+            background: #111;
+            color: #fff;
+        }
+
+        /* Fancy State Indicator */
+        .book-state {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .state-reading {
+            background: linear-gradient(135deg, #ff9a44, #fc6076);
+            box-shadow: 0 4px 15px rgba(255, 154, 68, 0.3);
+        }
+
+        .state-finished {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            box-shadow: 0 4px 15px rgba(67, 233, 123, 0.3);
+            color: #000;
+            /* Dark text for better contrast on bright green */
+        }
+
+        .state-planning {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            box-shadow: 0 4px 15px rgba(0, 198, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body class="dark-theme">
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">PORTFOLIO</div>
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../capabilities.html">Capabilities</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero page-padding">
+            <div class="hero-bg" style="background-image: url('../../assets/images/hero-ml-workspace.png');"></div>
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <h2 class="sub-heading">My Reading Journey</h2>
+                <h1 id="typewriter-books" class="main-name"></h1>
+                <p class="hero-desc">A collection of books I am reading, have finished, or plan to read.</p>
+            </div>
+        </section>
+
+        <section id="books" class="section">
+            <div class="container">
+                <div class="controls-container">
+                    <input type="text" id="search-books" placeholder="Search books...">
+                    <select id="filter-books">
+                        <option value="all">All Books</option>
+                        <option value="reading">Reading</option>
+                        <option value="planning">Planning</option>
+                        <option value="finished">Finished</option>
+                    </select>
+                </div>
+                <div class="books-grid">
+
+                    <BB alt="Reading">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/RecommenderSystemAlgorithmAndTheirApplication.jpg" alt="Recommender System algorithm and their application Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Recommender System Algorithms And Their Application</h3>
+                                <div class="book-state state-reading">Reading</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Planing">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/maybeYouShouldTalkToSomeone.jpg" alt="maybe You Should Talk To Someone Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Maybe You Should Talk To Someone</h3>
+                                <div class="book-state state-planning">Planning</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Planing">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/The5LevelsOfLeadership.jpg" alt="The 5 Levels Of Leadership Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The 5 Levels Of Leadership</h3>
+                                <div class="book-state state-planning">Planning</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Planing">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/EatThatFrog.jpg" alt="Eat That Frog Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Eat That Frog!</h3>
+                                <div class="book-state state-planning">Planning</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/richDadPoorDad.jpg" alt="rich Dad Poor Dad Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Rich Dad Poor Dad</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/SurroundedByIdiots.jpg" alt="Surrounded By Idiots Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Surrounded By Idiots</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/7Habits.jpg" alt="7 Habit Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The 7 Habits Of Highly Effective People</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/ArtOfNotGivingA.jpg" alt="Art Of Not Giving A Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The Subtle Art Of Not Giving A F*ck</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/CashFlowQuadrant.jpg" alt="Cash Flow Quadrant Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Rich Dad's Cashflow Quadrant</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/CharlieChaplin.jpg" alt="Charlie Chaplin Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Charlie Chaplin</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/CrimeAndPunishment.jpg" alt="Crime And Punishment Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Crime And Punishment</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/Forty.png" alt="Forty Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Forty</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/GoodToGreat.jpg" alt="Good To Great Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Good To Great</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/IKIGAI.jpg" alt="IKIGAI Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Ikigai</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/Jump.jpg" alt="Jump Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Jump</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/LettingGo.jpg" alt="Letting Go Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Letting Go</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/MarketingInOnePage.jpg" alt="Marketing In One Page Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The 1-Page Marketing Plan</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/MenMarsWomenVenus.jpg" alt="Men Mars Women Venus Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Men Are From Mars, Women Are From Venus</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/PowerOfNow.jpg" alt="Power Of Now Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The Power Of Now</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/PsychologicalOfMoney.jpg" alt="Psychological Of Money Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The Psychology Of Money</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/RichestManInBabylon.jpg" alt="Richest Man In Babylon Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The Richest Man In Babylon</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/SaltHistory.jpg" alt="Salt History Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Salt: A World History</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/SecretsMindMillionaire.jpg" alt="Secrets Mind Millionaire Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Secrets Of The Millionaire Mind</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/TheAgeOfSurveillanceCapitalism.jpg" alt="The Age Of Surveillance Capitalism Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The Age Of Surveillance Capitalism</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/TheCrowd.jpg" alt="The Crowd Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The Crowd</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/TheDopamineNation.jpg" alt="The Dopamine Nation Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Dopamine Nation</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/TheInvisibleGorilla.jpg" alt="The Invisible Gorilla Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The Invisible Gorilla</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/ThePowerOfHabit.jpg" alt="The Power Of Habit Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The Power Of Habit</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/ThePowerOfTheSubconsciousMind.jpg" alt="The Power Of The Subconscious Mind Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>The Power Of Your Subconscious Mind</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/ThinkAgain.png" alt="Think Again Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Think Again</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/ThinkAndGrowRich.jpg" alt="Think And Grow Rich Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Think And Grow Rich</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/WhoMovedMyCheese.jpg" alt="Who Moved My Cheese Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Who Moved My Cheese?</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/WhyWeSleep.jpg" alt="Why We Sleep Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Why We Sleep</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/atomicHabits.png" alt="Atomic Habits Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Atomic Habits</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/QuickThink.jpg" alt="Quick Think Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Thinking, Fast And Slow</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                    <BB alt="Finish it">
+                        <div class="book-card" data-gsap="fade-up">
+                            <div class="book-cover">
+                                <img src="books/YouCan'tHurtMe.jpg" alt="You Can't Hurt Me Cover">
+                            </div>
+                            <div class="book-info">
+                                <h3>Can't Hurt Me</h3>
+                                <div class="book-state state-finished">Finished</div>
+                            </div>
+                        </div>
+                    </BB>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="http://linkedin.com/in/abdullah-almousa-a76562237" target="_blank">LinkedIn</a>
+                <a href="http://github.com/Abdullah-Hamad-Almousa" target="_blank">GitHub</a>
+                <a href="http://kaggle.com/abdullahhamadalmousa" target="_blank">Kaggle</a>
+            </div>
+            <p>&copy; 2026 Abdullah Almousa</p>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/main.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const typewriterEl = document.getElementById('typewriter-books');
+            if (typewriterEl) {
+                let text = "Books Collection";
+                let i = 0;
+                function type() {
+                    if (i < text.length) {
+                        typewriterEl.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(type, 150);
+                    }
+                }
+                setTimeout(type, 500);
+            }
+
+            // Search and filter logic
+            const searchInput = document.getElementById('search-books');
+            const filterSelect = document.getElementById('filter-books');
+            const books = document.querySelectorAll('BB');
+
+            function filterBooks() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filterTerm = filterSelect.value.toLowerCase();
+
+                books.forEach(book => {
+                    const title = book.querySelector('h3').textContent.toLowerCase();
+                    const stateElem = book.querySelector('.book-state');
+                    const stateText = stateElem ? stateElem.textContent.toLowerCase() : '';
+
+                    const matchesSearch = title.includes(searchTerm);
+                    let matchesFilter = false;
+
+                    if (filterTerm === 'all') {
+                        matchesFilter = true;
+                    } else if (stateText.includes(filterTerm)) {
+                        matchesFilter = true;
+                    }
+
+                    if (matchesSearch && matchesFilter) {
+                        book.style.display = '';
+                    } else {
+                        book.style.display = 'none';
+                    }
+                });
+
+                if (typeof ScrollTrigger !== 'undefined') {
+                    ScrollTrigger.refresh();
+                }
+            }
+
+            if (searchInput && filterSelect) {
+                searchInput.addEventListener('input', filterBooks);
+                filterSelect.addEventListener('change', filterBooks);
+            }
+        });
+    </script>
+</body>
+
+</html>
